@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhavya's Epic Adventure Portfolio</title>
+    <!-- Updated font imports -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Audiowide&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: #0a0a2a;
+            color: #fff;
+            overflow-x: hidden;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .game-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: rgba(20, 20, 50, 0.9);
+            padding: 2rem;
+            border-right: 3px solid #4a90e2;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px #4a90e2;
+            }
+            to {
+                box-shadow: 0 0 20px #4a90e2, 0 0 30px #4a90e2;
+            }
+        }
+
+        .sidebar h2 {
+            font-family: 'Audiowide', cursive;
+            color: #4a90e2;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px #4a90e2;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin: 1rem 0;
+        }
+
+        .sidebar a {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar a:hover {
+            border-color: #4a90e2;
+            transform: translateX(10px);
+            text-shadow: 0 0 5px #4a90e2;
+        }
+
+        .sidebar a::before {
+            content: '►';
+            position: absolute;
+            left: -20px;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .sidebar a:hover::before {
+            opacity: 1;
+            left: -10px;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            background: rgba(10, 10, 42, 0.9);
+        }
+
+        .card {
+            background: rgba(30, 30, 60, 0.9);
+            border: 2px solid #4a90e2;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            transform-style: preserve-3d;
+            transition: all 0.3s;
+        }
+
+        .card h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #4a90e2;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.3);
+        }
+
+        h3 {
+            font-family: 'Audiowide', cursive;
+            color: #4a90e2;
+            margin: 2rem 0;
+            text-shadow: 0 0 10px #4a90e2;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .skill-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #4a90e2, #34495e);
+            padding: 0.5rem 1rem;
+            margin: 0.5rem;
+            border-radius: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            animation: float 3s ease-in-out infinite;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .xp-counter {
+            font-family: 'Audiowide', cursive;
+            font-size: 1.5rem;
+            color: #4a90e2;
+            text-align: right;
+            margin: 1rem;
+            text-shadow: 0 0 5px #4a90e2;
+        }
+
+        .achievement-unlock {
+            position: fixed;
+            bottom: 20px;
+            right: -300px;
+            background: rgba(74, 144, 226, 0.9);
+            padding: 1rem;
+            border-radius: 10px;
+            animation: slideIn 0.5s forwards;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes slideIn {
+            to {
+                right: 20px;
+            }
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: rgba(74, 144, 226, 0.2);
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a90e2, #2ecc71);
+            width: 0%;
+            transition: width 1s ease-in-out;
+            animation: progressPulse 2s infinite;
+        }
+
+        @keyframes progressPulse {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        p {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="game-container">
+        <nav class="sidebar">
+            <h2>Bhavya's Quest Log</h2>
+            <ul>
+                <li><a href="#experience" onclick="showAchievement('Experience Unlocked!')">Experience Points (XP)</a></li>
+                <li><a href="#skills" onclick="showAchievement('Skills Revealed!')">Skill Inventory</a></li>
+                <li><a href="#certifications" onclick="showAchievement('Achievements Viewed!')">Achievements</a></li>
+                <li><a href="#contact" onclick="showAchievement('Contact Channel Opened!')">Contact the Hero</a></li>
+            </ul>
+        </nav>
+        <main>
+            <div class="xp-counter">Total XP: <span id="xpCount">0</span></div>
+            <section id="experience">
+                <h3>Experience Points (XP)</h3>
+                <div class="card">
+                    <h4>Chief Technology Officer</h4>
+                    <p>Role completed at Persist Ventures. +5000 XP.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4>CTO @ FacesearchAI</h4>
+                    <p>Current role in Los Angeles. Gaining XP daily!</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+            </section>
+            <section id="skills">
+                <h3>Skill Inventory</h3>
+                <div class="skill-badge">Prompt Engineering</div>
+                <div class="skill-badge">ChatGPT Master</div>
+                <div class="skill-badge">NLP Wizardry</div>
+                <div class="skill-badge">AI Strategy</div>
+                <div class="skill-badge">Tech Leadership</div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#4a90e2'
+                },
+                shape: {
+                    type: 'circle'
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false
+                },
+                size: {
+                    value: 3,
+                    random: true
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#4a90e2',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'repulse'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                }
+            }
+        });
+
+        // XP Counter Animation
+        let xp = 0;
+        const targetXP = 5000;
+        const xpCounter = document.getElementById('xpCount');
+        
+        function animateXP() {
+            if (xp < targetXP) {
+                xp += 50;
+                xpCounter.textContent = xp;
+                setTimeout(animateXP, 20);
+            }
+        }
+
+        // Start animations when page loads
+        window.addEventListener('load', () => {
+            animateXP();
+            document.querySelectorAll('.progress-fill').forEach(fill => {
+                fill.style.width = '100%';
+            });
+        });
+
+        // Achievement notification system
+        function showAchievement(message) {
+            const achievement = document.createElement('div');
+            achievement.className = 'achievement-unlock';
+            achievement.textContent = '🏆 ' + message;
+            document.body.appendChild(achievement);
+
+            setTimeout(() => {
+                achievement.style.animation = 'slideIn 0.5s reverse forwards';
+                setTimeout(() => {
+                    document.body.removeChild(achievement);
+                }, 500);
+            }, 2000);
+        }
+
+        // Add hover effect to cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const angleX = (y - centerY) / 20;
+                const angleY = -(x - centerX) / 20;
+                
+                card.style.transform = rotateX(${angleX}deg) rotateY(${angleY}deg);
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateX(0) rotateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
